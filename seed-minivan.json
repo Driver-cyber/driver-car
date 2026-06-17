@@ -1,0 +1,245 @@
+{
+  "project": "minivan-tracker",
+  "version": "0.1.0",
+  "lastUpdated": "2026-06-17",
+  "location": "Vancouver, WA",
+  "users": ["Chad", "Joelle"],
+
+  "meta": {
+    "label": "Minivans",
+    "make": "Various",
+    "model": "Minivan",
+    "primerLabel": "Model primer (Sienna · Odyssey · Carnival · Pacifica)"
+  },
+
+  "budget": {
+    "preTaxTarget": 22500,
+    "allInTarget": 25000,
+    "monthlyPaymentTarget": 550,
+    "notes": "Same family budget as the Telluride hunt. Used minivans run pricier — the in-budget plays are a high-mileage Odyssey EX-L (~$24k) or a 2022 Carnival LX (~$22.5k). Sienna and Pacifica Hybrid stretch to ~$26k-$40k; keep those as references, not targets."
+  },
+
+  "financing": {
+    "lender": "Local credit union",
+    "rate": 0.0499,
+    "termYearsOptions": [6, 7],
+    "promoEnds": "2026-07-04",
+    "strategy": "Get PRE-APPROVED (not fully funded) before visiting dealers. Walk in with the rate locked; make the dealer beat 4.99% or keep them out of financing entirely.",
+    "note": "Same financing plan as the Telluride hunt."
+  },
+
+  "trimPrimer": [
+    {
+      "trim": "Sienna",
+      "tier": "Toyota · hybrid-only (2021+)",
+      "seats": 8,
+      "seatsConfig": "8-pass bench OR 7-pass captain's chairs",
+      "seatsMaterial": "cloth / SofTex / leather by trim",
+      "keyFeatures": ["Standard hybrid ~36 mpg", "AWD available", "Best reliability + resale", "Sliding doors"],
+      "skips": ["V8 grunt", "cheap entry price"],
+      "budgetFit": "stretch (clean 2021-2022 run $30k-$42k locally)"
+    },
+    {
+      "trim": "Odyssey",
+      "tier": "Honda · V6, FWD only",
+      "seats": 8,
+      "seatsConfig": "8-pass via Magic Slide 2nd row (no captain's-chair penalty)",
+      "seatsMaterial": "cloth / leather (EX-L+)",
+      "keyFeatures": ["Roomy, family favorite", "Magic Slide 2nd row", "Strong V6"],
+      "skips": ["no hybrid", "no AWD"],
+      "budgetFit": "realistic (high-miles EX-L lands ~$24k — the in-budget play)"
+    },
+    {
+      "trim": "Carnival",
+      "tier": "Kia · V6 MPV (SUV-styled)",
+      "seats": 8,
+      "seatsConfig": "8-pass uses a NARROW middle seat (not a full bench); 7-pass captain's chairs available",
+      "seatsMaterial": "cloth / SynTex / leather by trim",
+      "keyFeatures": ["Best value + space", "On-theme Kia", "Big screens on higher trims"],
+      "skips": ["no AWD on early years", "soft resale vs Sienna"],
+      "budgetFit": "borderline (2022 LX with miles ~$22.5k; 2023 averages ~$34k)",
+      "warning": "The 8-passenger Carnival's middle seat is a narrow add-in, not a true bench like the Sienna/Pacifica. Sit three across before you commit."
+    },
+    {
+      "trim": "Pacifica",
+      "tier": "Chrysler · V6 or plug-in hybrid",
+      "seats": 8,
+      "seatsConfig": "8-pass bench OR 7-pass captain's chairs — but HYBRID has no Stow 'n Go",
+      "seatsMaterial": "cloth / leather by trim",
+      "keyFeatures": ["Stow 'n Go (gas only)", "Plug-in hybrid ~32 mi electric", "Most configurable"],
+      "skips": ["Toyota-grade reliability"],
+      "budgetFit": "borderline (2021-2022 Hybrid averages ~$26k)",
+      "warning": "Pacifica Hybrid (PHEV) loses Stow 'n Go — the battery sits where the seats would fold into the floor. Pre-2019 cars had transmission/electrical recalls; 2021+ is much improved."
+    }
+  ],
+
+  "checklistTemplate": [
+    "Decide the seat layout: true 8-pass bench (Sienna/Pacifica) vs Odyssey Magic Slide vs Carnival narrow-middle",
+    "Test BOTH power sliding doors + the power liftgate (sensors/motors are a common fail)",
+    "Hybrid? Check battery health + remaining warranty (Pacifica PHEV has NO Stow 'n Go)",
+    "Run the VIN at nhtsa.gov/recalls and confirm all recalls are closed",
+    "Sienna: confirm AWD vs FWD if AWD matters to you",
+    "Pacifica: pull transmission + electrical service history (esp. older years)",
+    "Carnival: test all electrical — headlights, keyless entry, wipers, BCM",
+    "Odyssey: test infotainment + the Magic Slide 2nd-row mechanism",
+    "Brakes, 12V battery age, and fluid/service records",
+    "Show the credit union 4.99% pre-approval; make them beat it"
+  ],
+
+  "knownIssues": {
+    "siennaClimate": "Some Siennas report AC compressor / blower-motor issues; otherwise the reliability benchmark of the group.",
+    "odysseyDoorsInfotainment": "Power sliding-door sensors/motors and older infotainment glitches are the usual Odyssey gripes. Test every door cycle.",
+    "carnivalElectrical": "Carnival's common trouble spots are electrical — headlights, cruise, keyless entry, wiper motor, body control module. Exercise all of it.",
+    "pacificaMechanical": "Pacifica: motor mounts, tie-rods, alternator, EGR valve. 2017-2018 had heavy transmission/steering recall populations; 2021+ much improved.",
+    "pacificaStowNGo": "PHEV trades Stow 'n Go for the floor battery — confirm you can live without fold-flat 2nd-row storage.",
+    "recallsAllModels": "Every model: run the VIN at nhtsa.gov/recalls before buying and confirm completed work."
+  },
+
+  "listings": [
+    {
+      "id": "odyssey-2020-exl-105k",
+      "title": "2020 Honda Odyssey EX-L",
+      "year": 2020,
+      "trim": "Odyssey",
+      "drivetrain": "FWD",
+      "mileage": 105328,
+      "price": 23932,
+      "priceConfidence": "confirmed",
+      "sourceLink": "https://www.carfax.com/Used-Honda-Odyssey-Vancouver-WA_w306_c27223",
+      "dealer": "Dick Hannah Honda (Vancouver)",
+      "distanceMiles": 4,
+      "favorite": true,
+      "status": "TOP in-budget minivan target — local, leather, 8-pass Magic Slide",
+      "notes": "Flagged a 'good deal'. High miles but closest to the $22.5k target. Negotiate from here.",
+      "checklist": {}
+    },
+    {
+      "id": "odyssey-2021-exl-est",
+      "title": "2021 Honda Odyssey EX-L",
+      "year": 2021,
+      "trim": "Odyssey",
+      "drivetrain": "FWD",
+      "mileage": 72000,
+      "price": 25076,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.cars.com/shopping/honda-odyssey/vancouver-wa/",
+      "dealer": "Area average (Cars.com)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Right above target — EX-L average for the area",
+      "notes": "Avg EX-L list ~$25k. Confirm exact car, miles, and price at source.",
+      "checklist": {}
+    },
+    {
+      "id": "carnival-2022-lx-84k",
+      "title": "2022 Kia Carnival LX",
+      "year": 2022,
+      "trim": "Carnival",
+      "drivetrain": "FWD",
+      "mileage": 84000,
+      "price": 22549,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.carfax.com/Used-Kia-Carnival-Vancouver-WA_w9902_c27223",
+      "dealer": "Local listing",
+      "distanceMiles": null,
+      "favorite": true,
+      "status": "In-budget Carnival — on-theme Kia, big interior",
+      "notes": "Low end of the Carnival range (~$22.5k). Sit three across the narrow middle seat before committing.",
+      "checklist": {}
+    },
+    {
+      "id": "carnival-2023-est",
+      "title": "2023 Kia Carnival (trim TBD)",
+      "year": 2023,
+      "trim": "Carnival",
+      "drivetrain": "FWD",
+      "mileage": 38000,
+      "price": 33866,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.edmunds.com/used-2023-kia-carnival-vancouver-wa/",
+      "dealer": "Area average (Edmunds)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Over target — newer-Carnival reference point",
+      "notes": "Avg 2023 list ~$33.9k. Reference for how much newer/low-miles costs.",
+      "checklist": {}
+    },
+    {
+      "id": "pacifica-2022-hybrid-43k",
+      "title": "2022 Chrysler Pacifica Hybrid",
+      "year": 2022,
+      "trim": "Pacifica",
+      "drivetrain": "FWD",
+      "mileage": 42941,
+      "price": 26072,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.cargurus.com/Cars/l-Used-Chrysler-Pacifica-Hybrid-Vancouver-d2478_L38047",
+      "dealer": "Hillsboro, OR area",
+      "distanceMiles": 18,
+      "favorite": false,
+      "status": "Plug-in hybrid — ~82 MPGe, but no Stow 'n Go",
+      "notes": "~$26k average. Great if you want electric-only commuting; confirm hybrid battery health + warranty.",
+      "checklist": {}
+    },
+    {
+      "id": "pacifica-2021-hybrid-57k",
+      "title": "2021 Chrysler Pacifica Hybrid",
+      "year": 2021,
+      "trim": "Pacifica",
+      "drivetrain": "FWD",
+      "mileage": 56582,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.capitalone.com/cars/used-chrysler-pacifica-hybrid/in-vancouver-wa",
+      "dealer": "Nearby (Auto Navigator)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Cleaner-miles PHEV — pull current price",
+      "notes": "2021 was the first strong reliability year for the Pacifica. Pull the live price.",
+      "checklist": {}
+    },
+    {
+      "id": "sienna-2021-xse-57k",
+      "title": "2021 Toyota Sienna XSE (7-pass)",
+      "year": 2021,
+      "trim": "Sienna",
+      "drivetrain": "FWD",
+      "mileage": 57111,
+      "price": 39995,
+      "priceConfidence": "confirmed",
+      "sourceLink": "https://www.edmunds.com/used-toyota-sienna-vancouver-wa/",
+      "dealer": "Vancouver, WA",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Over budget — Sienna hybrid reference (7-pass captain's chairs)",
+      "notes": "Confirms Siennas hold value hard. XSE is 7-passenger captains, not the 8-seat bench. Confirm FWD vs AWD.",
+      "checklist": {}
+    },
+    {
+      "id": "sienna-2022-xle-est",
+      "title": "2022 Toyota Sienna XLE",
+      "year": 2022,
+      "trim": "Sienna",
+      "drivetrain": "FWD",
+      "mileage": 36000,
+      "price": 42346,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.truecar.com/used-cars-for-sale/listings/toyota/sienna/location-vancouver-wa/",
+      "dealer": "Area average (TrueCar)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Well over budget — newer-Sienna reference",
+      "notes": "Avg 2022 list ~$42k. XLE offers the 8-pass bench option. Aspirational, not a target.",
+      "checklist": {}
+    }
+  ],
+
+  "searchHubs": [
+    { "name": "Sienna · Carfax", "url": "https://www.carfax.com/Used-Toyota-Sienna-Vancouver-WA_w640_c27223" },
+    { "name": "Odyssey · Carfax", "url": "https://www.carfax.com/Used-Honda-Odyssey-Vancouver-WA_w306_c27223" },
+    { "name": "Carnival · Carfax", "url": "https://www.carfax.com/Used-Kia-Carnival-Vancouver-WA_w9902_c27223" },
+    { "name": "Pacifica · CarGurus", "url": "https://www.cargurus.com/Cars/l-Used-Chrysler-Pacifica-Vancouver-d2478_L38047" },
+    { "name": "All minivans · Cars.com", "url": "https://www.cars.com/shopping/minivan/vancouver-wa/" },
+    { "name": "Capital One Auto Navigator", "url": "https://www.capitalone.com/cars/" }
+  ]
+}

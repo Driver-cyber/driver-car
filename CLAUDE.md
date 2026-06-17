@@ -23,17 +23,30 @@ State shape (one level above the original seed schema):
 state = {
   schemaVersion, activeCategory, lastUpdated,
   categories: {
-    telluride: { label, make, model, budget, financing, trimPrimer[],
+    telluride: { label, make, model, primerLabel, budget, financing, trimPrimer[],
                  checklistTemplate[], knownIssues{}, listings[], searchHubs[] },
-    // minivan: { ... }  ← drop-in: add a category, it gets a tab + full UI
+    minivan:   { ...same shape... }   ← shipped
+    // add another category to CATEGORY_SEEDS → it gets a tab + full UI
   }
 }
 ```
 
-`seed-data.json` remains the canonical schema source of truth for a single
-category (top-level keys: `budget`, `financing`, `trimPrimer`,
-`checklistTemplate`, `knownIssues`, `listings[]`, `searchHubs[]`).
-`categoryFromSeed()` wraps that raw doc into a category record.
+`seed-data.json` (Telluride) and `seed-minivan.json` (Minivans) are the
+canonical per-category schema sources — each a raw doc with top-level keys
+`budget`, `financing`, `trimPrimer`, `checklistTemplate`, `knownIssues`,
+`listings[]`, `searchHubs[]`, plus an optional `meta` block
+(`label`, `make`, `model`, `primerLabel`).
+
+`CATEGORY_SEEDS` (in `index.html`) is the registry: each entry names a seed
+file + an inline embedded fallback + default meta. `buildDefaultCategories()`
+loads them and `categoryFromSeed()` wraps each raw doc into a category record.
+On load, `init()` backfills any newly-registered category into an existing
+saved state **without** clobbering the user's edits — so adding a category is
+a true drop-in even for returning users.
+
+For the Minivans category, "trim" is repurposed to mean **model**
+(Sienna / Odyssey / Carnival / Pacifica) so the trim filter filters by model;
+the trim level lives in each listing's title.
 
 The `store` module (get/save/clear over localStorage) is the **seam for Phase 2**
 live sync (Cloudflare Worker + KV, or Firebase) — swap it without touching the UI.
@@ -76,8 +89,18 @@ live sync (Cloudflare Worker + KV, or Firebase) — swap it without touching the
 - Export → re-import → identical state.
 - The 2020 LX (`lx-2020-84k`) shows favorited as the top target.
 
+## Shipped — Phase 1.5
+
+- **Minivans tab.** A `minivan` category covering **Sienna / Odyssey /
+  Carnival / Pacifica**, with a per-model primer, minivan-specific checklist
+  (sliding doors, hybrid battery, Stow 'n Go), known issues, and seed listings
+  pulled from current Vancouver-WA-area pricing (mostly `estimate` confidence —
+  verify at source). Top in-budget targets: high-miles **Odyssey EX-L** and a
+  2022 **Carnival LX**.
+
 ## Next
 
-- **Minivans tab** (ghost tab is already wired in the UI). Add a `minivan`
-  category — Sienna / Odyssey / Carnival, with its own trims, checklist, issues.
-- Phase 2 live sync via the `store` seam.
+- Phase 2 live sync via the `store` seam (Cloudflare Worker + KV, or Firebase).
+- Refresh minivan prices (they go stale fast) and add real per-VIN listings as
+  Chad/Joelle find them.
+- Possible: a third category (trucks? wagons?) — same drop-in pattern.

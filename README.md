@@ -5,7 +5,9 @@ car search (Vancouver, WA). Built for two phones, no build step, deployed as
 static files on **GitHub Pages**.
 
 Started as a Kia **Telluride** tracker and architected with tabbed
-**categories** so other vehicle types (Minivans next) drop right in.
+**categories**. Now ships with two tabs: **Tellurides** and **Minivans**
+(Sienna · Odyssey · Carnival · Pacifica). Adding another vehicle type is a
+drop-in.
 
 ## Run it
 
@@ -25,7 +27,8 @@ inline as a fallback for when `fetch()` is blocked.
 | File | Purpose |
 | --- | --- |
 | `index.html` | The whole app — inline CSS/JS, no dependencies. |
-| `seed-data.json` | Canonical seed/schema, loaded on first run. |
+| `seed-data.json` | Telluride seed/schema, loaded on first run. |
+| `seed-minivan.json` | Minivan seed (Sienna/Odyssey/Carnival/Pacifica). |
 | `CLAUDE.md` | Architecture + handoff notes. |
 
 ## Features
