@@ -26,16 +26,17 @@ state = {
     telluride: { label, make, model, primerLabel, budget, financing, trimPrimer[],
                  checklistTemplate[], knownIssues{}, listings[], searchHubs[] },
     minivan:   { ...same shape... }   ← shipped
+    suv:       { ...same shape... }   ← shipped (3-row SUVs)
     // add another category to CATEGORY_SEEDS → it gets a tab + full UI
   }
 }
 ```
 
-`seed-data.json` (Telluride) and `seed-minivan.json` (Minivans) are the
-canonical per-category schema sources — each a raw doc with top-level keys
-`budget`, `financing`, `trimPrimer`, `checklistTemplate`, `knownIssues`,
-`listings[]`, `searchHubs[]`, plus an optional `meta` block
-(`label`, `make`, `model`, `primerLabel`).
+`seed-data.json` (Telluride), `seed-minivan.json` (Minivans), and
+`seed-suv.json` (3-row SUVs) are the canonical per-category schema sources —
+each a raw doc with top-level keys `budget`, `financing`, `trimPrimer`,
+`checklistTemplate`, `knownIssues`, `listings[]`, `searchHubs[]`, plus an
+optional `meta` block (`label`, `make`, `model`, `primerLabel`).
 
 `CATEGORY_SEEDS` (in `index.html`) is the registry: each entry names a seed
 file + an inline embedded fallback + default meta. `buildDefaultCategories()`
@@ -44,9 +45,14 @@ On load, `init()` backfills any newly-registered category into an existing
 saved state **without** clobbering the user's edits — so adding a category is
 a true drop-in even for returning users.
 
-For the Minivans category, "trim" is repurposed to mean **model**
-(Sienna / Odyssey / Carnival / Pacifica) so the trim filter filters by model;
-the trim level lives in each listing's title.
+For the Minivans and 3-Row SUVs categories, "trim" is repurposed to mean
+**model** (Sienna / Odyssey / Carnival / Pacifica; Palisade / Ascent / Pilot)
+so the trim filter filters by model; the trim level lives in each listing's
+title.
+
+Listings also carry `votes: [{ id, type:"up"|"down", note }]` (test-drive
+feedback, editable/deletable, sortable by net score) and a `testDriven` flag
+(toggle + "Driven only" filter).
 
 The `store` module (get/save/clear over localStorage) is the **seam for Phase 2**
 live sync (Cloudflare Worker + KV, or Firebase) — swap it without touching the UI.
@@ -98,9 +104,19 @@ live sync (Cloudflare Worker + KV, or Firebase) — swap it without touching the
   verify at source). Top in-budget targets: high-miles **Odyssey EX-L** and a
   2022 **Carnival LX**.
 
+## Shipped — Phase 1.6
+
+- **3-Row SUVs tab.** A `suv` category covering **Hyundai Palisade /
+  Subaru Ascent / Honda Pilot**, with a per-model primer (incl. the Palisade =
+  Telluride-twin note and the 8-seat-bench-vs-captains trap), an SUV-specific
+  checklist (CVT/9-speed checks, 3rd-row car-seat access), known issues, and
+  seed listings from current Vancouver-WA pricing. In-budget targets favorited:
+  a confirmed 2018 **Pilot EX-L** (~$21.5k) and a 2019 **Ascent Premium** (AWD).
+- **Test-drive votes + Driven tag** on every card (all categories).
+
 ## Next
 
 - Phase 2 live sync via the `store` seam (Cloudflare Worker + KV, or Firebase).
-- Refresh minivan prices (they go stale fast) and add real per-VIN listings as
+- Refresh prices (they go stale fast) and add real per-VIN listings as
   Chad/Joelle find them.
-- Possible: a third category (trucks? wagons?) — same drop-in pattern.
+- Possible: more categories (trucks? wagons?) — same drop-in pattern.

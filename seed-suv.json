@@ -1,0 +1,199 @@
+{
+  "project": "suv-3row-tracker",
+  "version": "0.1.0",
+  "lastUpdated": "2026-06-17",
+  "location": "Vancouver, WA",
+  "users": ["Chad", "Joelle"],
+
+  "meta": {
+    "label": "3-Row SUVs",
+    "make": "Various",
+    "model": "SUV",
+    "primerLabel": "Model primer (Palisade · Ascent · Pilot)"
+  },
+
+  "budget": {
+    "preTaxTarget": 22500,
+    "allInTarget": 25000,
+    "monthlyPaymentTarget": 550,
+    "notes": "Same family budget. The in-budget plays here are a high-mileage Honda Pilot EX-L (~$21.5k confirmed) or a 2019 Subaru Ascent Premium (~$19.6k-$22k, standard AWD). Palisade is the Telluride's twin — worth price-checking, but clean ones run ~$26k+."
+  },
+
+  "financing": {
+    "lender": "Local credit union",
+    "rate": 0.0499,
+    "termYearsOptions": [6, 7],
+    "promoEnds": "2026-07-04",
+    "strategy": "Get PRE-APPROVED (not fully funded) before visiting dealers. Walk in with the rate locked; make the dealer beat 4.99% or keep them out of financing entirely.",
+    "note": "Same financing plan as the rest of the hunt."
+  },
+
+  "trimPrimer": [
+    {
+      "trim": "Palisade",
+      "tier": "Hyundai · the Telluride's twin",
+      "seats": 8,
+      "seatsConfig": "8-pass bench (SE/SEL) or 7-pass captain's chairs (higher trims)",
+      "seatsMaterial": "cloth / leather by trim",
+      "keyFeatures": ["Same platform + 3.8L V6 as the Telluride", "Often lists a bit cheaper", "Roomy 3rd row"],
+      "skips": ["nothing vs Telluride — it's mechanically the same car"],
+      "budgetFit": "stretch (clean 2020-2021 run ~$26k-$32k; high-miles 2020 can near $25k)",
+      "warning": "Shares the Telluride's gotchas: 3.8L V6 oil consumption as it ages + screen/cluster failures. Check the dipstick and test every screen. Top trims are 7-seat captain's chairs, not the 8-seat bench."
+    },
+    {
+      "trim": "Ascent",
+      "tier": "Subaru · standard AWD (PNW-friendly)",
+      "seats": 8,
+      "seatsConfig": "8-pass bench (base / Premium) or 7-pass captain's chairs (Limited / Touring)",
+      "seatsMaterial": "cloth (Premium) / leather (Limited+)",
+      "keyFeatures": ["AWD standard — great for PNW", "Strong value used", "Good safety scores"],
+      "skips": ["V6 power (it's a turbo-4)", "8 seats on the top trims"],
+      "budgetFit": "realistic (2019 Premium lands ~$19.6k-$22k — an in-budget play)"
+    },
+    {
+      "trim": "Pilot",
+      "tier": "Honda · V6, reliable, roomy",
+      "seats": 8,
+      "seatsConfig": "8-pass bench (LX / EX / EX-L) or 7-pass captain's chairs (Touring / Elite)",
+      "seatsMaterial": "cloth / leather (EX-L+)",
+      "keyFeatures": ["Reliable 3.5L V6", "Big, flat 3rd row + cargo", "Easy to live with"],
+      "skips": ["no hybrid", "8 seats on Touring/Elite"],
+      "budgetFit": "realistic (2018 EX-L with miles lands ~$21.5k — confirmed in-budget)"
+    }
+  ],
+
+  "checklistTemplate": [
+    "Confirm 8-passenger BENCH (lower trims) vs 7-seat captain's chairs (top trims)",
+    "Run the VIN at nhtsa.gov/recalls and confirm all recalls are closed",
+    "Palisade: check the dipstick for oil consumption + test all screens (same as the Telluride)",
+    "Ascent: check the CVT for shudder; confirm fluid service + any early-build TSBs done",
+    "Pilot: feel the 9-speed auto (2016-2018) for harsh shifts; test idle-stop + infotainment",
+    "Confirm AWD vs FWD if AWD matters (Subaru is always AWD; Honda/Hyundai optional)",
+    "Sit a car seat in the 2nd row and test 3rd-row access with it installed",
+    "Measure cargo behind the 3rd row for the stroller/gear",
+    "Brakes, 12V battery age, and fluid/service records",
+    "Show the credit union 4.99% pre-approval; make them beat it"
+  ],
+
+  "knownIssues": {
+    "palisadeOilAndScreens": "Palisade = Telluride underneath: 3.8L V6 oil consumption as it ages and screen/cluster failures. Same checks apply.",
+    "ascentCvt": "Early Ascents had CVT and oil/spark-plug TSBs; some report CVT shudder. Confirm fluid service and updates, and feel for it on the drive.",
+    "pilotTransmission": "2016-2018 Pilots with the 9-speed auto drew complaints for harsh/hesitant shifting; idle-stop and the knob-less infotainment also annoy owners. The 6-speed (lower trims) is smoother.",
+    "eightSeatTrap": "Across all three, the true 8-seat bench lives in the base/mid trims — top trims swap to 7-seat captain's chairs.",
+    "recallsAllModels": "Every model: run the VIN at nhtsa.gov/recalls before buying and confirm completed work."
+  },
+
+  "listings": [
+    {
+      "id": "pilot-2018-exl-96k",
+      "title": "2018 Honda Pilot EX-L AWD",
+      "year": 2018,
+      "trim": "Pilot",
+      "drivetrain": "AWD",
+      "mileage": 96200,
+      "price": 21500,
+      "priceConfidence": "confirmed",
+      "sourceLink": "https://www.carfax.com/Used-Honda-Pilot-Vancouver-WA_w307_c27223",
+      "dealer": "Vancouver, WA listing",
+      "distanceMiles": null,
+      "favorite": true,
+      "status": "TOP in-budget SUV — confirmed price, leather, 8-passenger V6",
+      "notes": "High miles but right at target and reliable. Test the 9-speed auto on the drive. Negotiate from here.",
+      "checklist": {}
+    },
+    {
+      "id": "ascent-2019-premium-75k",
+      "title": "2019 Subaru Ascent Premium AWD",
+      "year": 2019,
+      "trim": "Ascent",
+      "drivetrain": "AWD",
+      "mileage": 75000,
+      "price": 21500,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.carfax.com/Used-Subaru-Ascent-Vancouver-WA_w9502_c27223",
+      "dealer": "Area listing",
+      "distanceMiles": null,
+      "favorite": true,
+      "status": "In-budget + standard AWD — 8-passenger Premium",
+      "notes": "Premium trims listed as low as ~$19.6k locally. Standard AWD is a PNW win. Check the CVT for shudder.",
+      "checklist": {}
+    },
+    {
+      "id": "palisade-2020-sel-70k",
+      "title": "2020 Hyundai Palisade SEL AWD",
+      "year": 2020,
+      "trim": "Palisade",
+      "drivetrain": "AWD",
+      "mileage": 70000,
+      "price": 26500,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.edmunds.com/used-hyundai-palisade-vancouver-wa/",
+      "dealer": "Area listing",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "The Telluride's twin — price-check in parallel",
+      "notes": "Over target, but a high-mileage 2020 SEL can approach $25k. Same engine/checks as the Telluride. Confirm 8-seat bench vs captains.",
+      "checklist": {}
+    },
+    {
+      "id": "ascent-2020-premium-est",
+      "title": "2020 Subaru Ascent Premium AWD",
+      "year": 2020,
+      "trim": "Ascent",
+      "drivetrain": "AWD",
+      "mileage": 55000,
+      "price": 24500,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.cars.com/shopping/subaru-ascent/vancouver-wa/",
+      "dealer": "Area average (Cars.com)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Just at the all-in target — cleaner-miles Ascent",
+      "notes": "Lower miles pushes price up. Reference for newer Ascent pricing.",
+      "checklist": {}
+    },
+    {
+      "id": "pilot-2019-ex-est",
+      "title": "2019 Honda Pilot EX AWD",
+      "year": 2019,
+      "trim": "Pilot",
+      "drivetrain": "AWD",
+      "mileage": 48000,
+      "price": 31301,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.cars.com/shopping/honda-pilot/vancouver-wa/",
+      "dealer": "Area average (Cars.com)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Over target — low-miles Pilot reference",
+      "notes": "Avg 2019 list ~$31k at ~48k mi. Shows how much cleaner miles cost; the 2018 high-miles car is the value play.",
+      "checklist": {}
+    },
+    {
+      "id": "palisade-2021-sel-est",
+      "title": "2021 Hyundai Palisade SEL",
+      "year": 2021,
+      "trim": "Palisade",
+      "drivetrain": "AWD",
+      "mileage": 49000,
+      "price": 32305,
+      "priceConfidence": "estimate",
+      "sourceLink": "https://www.cars.com/shopping/hyundai-palisade/vancouver-wa/",
+      "dealer": "Area average (Cars.com)",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Well over target — newer-Palisade reference",
+      "notes": "Avg 2021 list ~$32.3k. Aspirational; the SEL nationwide floor is ~$15k for high-miles cars, so keep digging.",
+      "checklist": {}
+    }
+  ],
+
+  "searchHubs": [
+    { "name": "Pilot · Carfax", "url": "https://www.carfax.com/Used-Honda-Pilot-Vancouver-WA_w307_c27223" },
+    { "name": "Ascent · Carfax", "url": "https://www.carfax.com/Used-Subaru-Ascent-Vancouver-WA_w9502_c27223" },
+    { "name": "Palisade · Edmunds", "url": "https://www.edmunds.com/used-hyundai-palisade-vancouver-wa/" },
+    { "name": "Pilot · CarGurus", "url": "https://www.cargurus.com/Cars/l-Used-Honda-Pilot-Vancouver-d594_L38047" },
+    { "name": "Palisade · Cars.com", "url": "https://www.cars.com/shopping/hyundai-palisade/vancouver-wa/" },
+    { "name": "Capital One Auto Navigator", "url": "https://www.capitalone.com/cars/" }
+  ]
+}
