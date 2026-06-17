@@ -151,6 +151,37 @@
   }
   .star.on { color: var(--gold); }
   .star:active { transform: scale(1.25); }
+  .head-toggles { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* "Test-driven" toggle (sibling of the favorite star) */
+  .driven-toggle {
+    font-family: "JetBrains Mono", monospace; font-size: 10.5px; font-weight: 500; letter-spacing: .04em;
+    padding: 5px 9px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    background: var(--card); color: var(--muted); border: 1.5px solid var(--line); transition: all .15s ease;
+  }
+  .driven-toggle:hover { border-color: var(--sage); color: var(--ink-soft); }
+  .driven-toggle.on { background: var(--sage); color: var(--bone); border-color: var(--sage); }
+  .card.driven { border-left: 4px solid var(--sage); }
+
+  /* vote chip (at-a-glance 👍/👎 counts) */
+  .vote-chip { display: flex; gap: 8px; margin: 6px 0 2px; font-size: 12px; }
+  .vote-chip .vc { padding: 2px 9px; border-radius: 999px; font-weight: 500; }
+  .vote-chip .vc.up { background: #e3efe0; color: var(--good); }
+  .vote-chip .vc.down { background: #f3ddd5; color: var(--bad); }
+  .vote-chip .vc.none { color: var(--muted); font-style: italic; padding-left: 0; }
+
+  /* votes disclosure body */
+  .votes { margin: 8px 0 2px; }
+  .vote { display: flex; align-items: center; gap: 8px; padding: 6px 0; flex-wrap: wrap; }
+  .vote + .vote { border-top: 1px solid var(--line); }
+  .vote-icon { font-size: 15px; flex-shrink: 0; }
+  .vote-note { flex: 1 1 140px; font-size: 12.5px; line-height: 1.4; }
+  .vote-up .vote-note { color: var(--ink); }
+  .vote-down .vote-note { color: var(--ink); }
+  .vote-input { flex: 1 1 160px; font-size: 12.5px; padding: 6px 8px; }
+  .vote-add { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn.vote-up:hover { border-color: var(--good); color: var(--good); }
+  .btn.vote-down:hover { border-color: var(--bad); color: var(--bad); }
 
   .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 2px; font-size: 12.5px; color: var(--ink-soft); }
   .meta b { color: var(--ink); font-weight: 500; }
@@ -791,7 +822,7 @@ const CATEGORY_SEEDS = [
 ];
 
 let state = null;
-let ui = { sort: "default", filterTrim: "all", filterDrive: "all", favOnly: false };
+let ui = { sort: "default", filterTrim: "all", filterDrive: "all", favOnly: false, drivenOnly: false };
 
 /* ---------------- Store module (swap target for Phase 2 backend) ---------- */
 const store = {
@@ -970,6 +1001,7 @@ function toolbar(cat) {
       ["mileage-desc", "Mileage ↓"],
       ["year-desc", "Year (newest)"],
       ["year-asc", "Year (oldest)"],
+      ["votes-desc", "Top rated (test-drive votes)"],
       ["value", "Best value"]
     ].map(([v, l]) => el("option", { value: v, selected: ui.sort === v }, l))
   );
@@ -998,16 +1030,28 @@ function filterBar(cat) {
     el("input", { type: "checkbox", checked: ui.favOnly, onchange: e => { ui.favOnly = e.target.checked; render(); } }),
     "★ Favorites only"
   );
+  const drivenLabel = el("label", { class: "chk-only" },
+    el("input", { type: "checkbox", checked: ui.drivenOnly, onchange: e => { ui.drivenOnly = e.target.checked; render(); } }),
+    "🚗 Driven only"
+  );
 
-  return el("div", { class: "filterbar" }, trimSel, driveSel, favLabel);
+  return el("div", { class: "filterbar" }, trimSel, driveSel, favLabel, drivenLabel);
 }
 
 /* ---------------- Listings view ------------------------------------------- */
+// Test-drive vote helpers. Each listing carries votes: [{ id, type:"up"|"down", note }].
+function voteCounts(l) {
+  const v = l.votes || [];
+  return { up: v.filter(x => x.type === "up").length, down: v.filter(x => x.type === "down").length };
+}
+function netVotes(l) { const c = voteCounts(l); return c.up - c.down; }
+
 function applySortFilter(listings) {
   let out = listings.slice();
   if (ui.filterTrim !== "all") out = out.filter(l => l.trim === ui.filterTrim);
   if (ui.filterDrive !== "all") out = out.filter(l => l.drivetrain === ui.filterDrive);
   if (ui.favOnly) out = out.filter(l => l.favorite);
+  if (ui.drivenOnly) out = out.filter(l => l.testDriven);
 
   const num = (v, d) => (v == null ? d : v);
   switch (ui.sort) {
@@ -1017,6 +1061,7 @@ function applySortFilter(listings) {
     case "mileage-desc": out.sort((a, b) => num(b.mileage, -Infinity) - num(a.mileage, -Infinity)); break;
     case "year-desc": out.sort((a, b) => num(b.year, -Infinity) - num(a.year, -Infinity)); break;
     case "year-asc": out.sort((a, b) => num(a.year, Infinity) - num(b.year, Infinity)); break;
+    case "votes-desc": out.sort((a, b) => netVotes(b) - netVotes(a) || voteCounts(b).up - voteCounts(a).up); break;
     case "value": out.sort((a, b) => valueScore(a) - valueScore(b)); break;
     default:
       // favorites first, then by price asc (nulls last)
@@ -1108,17 +1153,23 @@ function renderPriceEditor(row, cat, l) {
 }
 
 function listingCard(cat, l) {
+  l.votes = l.votes || [];
   const over = l.price != null && cat.budget && cat.budget.preTaxTarget != null && l.price > cat.budget.preTaxTarget;
-  const card = el("div", { class: "card" + (l.favorite ? " fav" : "") + (over ? " over" : "") });
+  const card = el("div", { class: "card" + (l.favorite ? " fav" : "") + (over ? " over" : "") + (l.testDriven ? " driven" : "") });
 
-  // head
+  // head — favorite star + "test-driven" toggle
   const star = el("button", {
     class: "star" + (l.favorite ? " on" : ""), title: "Favorite",
     onclick: () => { l.favorite = !l.favorite; persist(); render(); }
   }, l.favorite ? "★" : "☆");
+  const drivenBtn = el("button", {
+    class: "driven-toggle" + (l.testDriven ? " on" : ""),
+    title: l.testDriven ? "Test-driven — click to unset" : "Mark as test-driven",
+    onclick: () => { l.testDriven = !l.testDriven; persist(); render(); }
+  }, l.testDriven ? "🚗 Driven" : "🚗 Drive?");
   card.appendChild(el("div", { class: "card-head" },
     el("h3", {}, l.title || "Untitled listing"),
-    star
+    el("div", { class: "head-toggles" }, drivenBtn, star)
   ));
 
   // meta
@@ -1130,6 +1181,18 @@ function listingCard(cat, l) {
   if (l.dealer) meta.appendChild(el("span", {}, l.dealer));
   if (l.distanceMiles != null) meta.appendChild(el("span", {}, l.distanceMiles + " mi away"));
   card.appendChild(meta);
+
+  // at-a-glance vote chip (repainted in place when votes change)
+  const voteChip = el("span", { class: "vote-chip" });
+  const paintChip = () => {
+    const { up, down } = voteCounts(l);
+    voteChip.innerHTML = "";
+    if (up) voteChip.appendChild(el("span", { class: "vc up" }, "👍 " + up));
+    if (down) voteChip.appendChild(el("span", { class: "vc down" }, "👎 " + down));
+    if (!up && !down) voteChip.appendChild(el("span", { class: "vc none" }, "No test-drive notes yet"));
+  };
+  paintChip();
+  card.appendChild(voteChip);
 
   // price (with inline quick-edit)
   card.appendChild(priceRowEl(cat, l));
@@ -1145,12 +1208,94 @@ function listingCard(cat, l) {
   actions.appendChild(el("button", { class: "btn tiny danger", onclick: () => deleteListing(cat, l) }, "Delete"));
   card.appendChild(actions);
 
+  // test-drive votes disclosure (👍/👎 with notes)
+  card.appendChild(votesDisc(cat, l, paintChip));
   // checklist disclosure
   card.appendChild(checklistDisc(cat, l));
   // edit disclosure
   card.appendChild(editDisc(cat, l, card));
 
   return card;
+}
+
+/* ---------------- Test-drive votes (👍/👎 + notes) ------------------------ */
+function votesDisc(cat, l, paintChip) {
+  l.votes = l.votes || [];
+  const d = el("details", { class: "disc", open: l.votes.length ? "" : null });
+  const countSpan = el("span", { class: "progress" });
+  d.appendChild(el("summary", {}, "Test-drive notes", countSpan));
+  const body = el("div", { class: "votes" });
+  d.appendChild(body);
+
+  const sync = () => {
+    const { up, down } = voteCounts(l);
+    countSpan.textContent = `👍 ${up} · 👎 ${down}`;
+    if (paintChip) paintChip();
+  };
+  renderVotesList(body, cat, l, sync);
+  sync();
+  return d;
+}
+
+function renderVotesList(box, cat, l, sync) {
+  box.innerHTML = "";
+  (l.votes || []).forEach(v => box.appendChild(voteRow(box, cat, l, v, sync)));
+  box.appendChild(el("div", { class: "vote-add" },
+    el("button", { class: "btn tiny vote-up", onclick: () => openVoteForm(box, cat, l, "up", sync) }, "👍 Add upvote"),
+    el("button", { class: "btn tiny vote-down", onclick: () => openVoteForm(box, cat, l, "down", sync) }, "👎 Add downvote")
+  ));
+}
+
+function voteRow(box, cat, l, v, sync) {
+  const row = el("div", { class: "vote vote-" + v.type });
+  row.appendChild(el("span", { class: "vote-icon", title: v.type === "up" ? "Upvote" : "Downvote" }, v.type === "up" ? "👍" : "👎"));
+  row.appendChild(el("span", { class: "vote-note" }, v.note || "(no note)"));
+  row.appendChild(el("button", { class: "btn tiny", title: "Edit note", onclick: () => editVoteRow(row, box, cat, l, v, sync) }, "Edit"));
+  row.appendChild(el("button", { class: "btn tiny", title: "Flip up/down", onclick: () => {
+    v.type = v.type === "up" ? "down" : "up"; persist(); renderVotesList(box, cat, l, sync); sync();
+  } }, "⇅"));
+  row.appendChild(el("button", { class: "btn tiny danger", title: "Delete note", onclick: () => {
+    l.votes = l.votes.filter(x => x !== v); persist(); renderVotesList(box, cat, l, sync); sync();
+  } }, "✕"));
+  return row;
+}
+
+function editVoteRow(row, box, cat, l, v, sync) {
+  row.innerHTML = "";
+  const input = el("input", { type: "text", class: "vote-input", value: v.note || "", placeholder: "e.g. low road noise" });
+  const save = () => { v.note = input.value.trim(); persist(); renderVotesList(box, cat, l, sync); sync(); };
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); save(); }
+    if (e.key === "Escape") renderVotesList(box, cat, l, sync);
+  });
+  row.appendChild(el("span", { class: "vote-icon" }, v.type === "up" ? "👍" : "👎"));
+  row.appendChild(input);
+  row.appendChild(el("button", { class: "btn tiny primary", onclick: save }, "Save"));
+  row.appendChild(el("button", { class: "btn tiny", onclick: () => renderVotesList(box, cat, l, sync) }, "Cancel"));
+  setTimeout(() => { input.focus(); input.select(); }, 0);
+}
+
+function openVoteForm(box, cat, l, type, sync) {
+  const form = el("div", { class: "vote vote-" + type });
+  const input = el("input", { type: "text", class: "vote-input",
+    placeholder: type === "up" ? "What's good? e.g. low road noise" : "What's bad? e.g. hard to open doors for kids" });
+  const save = () => {
+    const note = input.value.trim();
+    l.votes.push({ id: "v-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), type, note });
+    persist(); renderVotesList(box, cat, l, sync); sync();
+    toast(type === "up" ? "Upvote added" : "Downvote added");
+  };
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); save(); }
+    if (e.key === "Escape") renderVotesList(box, cat, l, sync);
+  });
+  form.appendChild(el("span", { class: "vote-icon" }, type === "up" ? "👍" : "👎"));
+  form.appendChild(input);
+  form.appendChild(el("button", { class: "btn tiny primary", onclick: save }, "Save"));
+  form.appendChild(el("button", { class: "btn tiny", onclick: () => renderVotesList(box, cat, l, sync) }, "Cancel"));
+  // insert the form just above the add-buttons row
+  box.insertBefore(form, box.lastChild);
+  setTimeout(() => input.focus(), 0);
 }
 
 /* ---------------- Per-car checklist --------------------------------------- */
@@ -1245,14 +1390,15 @@ function addListing(cat) {
   cat.listings.unshift({
     id, title: "New " + (cat.model || "listing"), year: null, trim: null, drivetrain: null,
     mileage: null, price: null, priceConfidence: "unknown", sourceLink: "",
-    dealer: "", distanceMiles: null, favorite: false, status: "", notes: "", checklist: {}
+    dealer: "", distanceMiles: null, favorite: false, testDriven: false,
+    status: "", notes: "", checklist: {}, votes: []
   });
   persist();
   render();
-  // open the new card's edit form
+  // open the new card's edit form (the edit disclosure is the last one on the card)
   setTimeout(() => {
     const first = $(".card");
-    if (first) { const ed = first.querySelectorAll("details.disc")[1]; if (ed) ed.setAttribute("open", ""); first.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    if (first) { const discs = first.querySelectorAll("details.disc"); const ed = discs[discs.length - 1]; if (ed) ed.setAttribute("open", ""); first.scrollIntoView({ behavior: "smooth", block: "center" }); }
   }, 30);
   toast("Listing added — fill in the details");
 }
@@ -1371,7 +1517,7 @@ async function resetToSeed() {
   store.clear();
   state = await freshState();
   store.save(state);
-  ui = { sort: "default", filterTrim: "all", filterDrive: "all", favOnly: false };
+  ui = { sort: "default", filterTrim: "all", filterDrive: "all", favOnly: false, drivenOnly: false };
   render();
   toast("Reset to seed");
 }
