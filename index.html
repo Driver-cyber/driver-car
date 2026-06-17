@@ -156,8 +156,14 @@
   .meta b { color: var(--ink); font-weight: 500; }
 
   .price-row { display: flex; align-items: baseline; gap: 10px; margin: 10px 0 6px; flex-wrap: wrap; }
-  .price { font-family: "Fraunces", serif; font-size: 26px; font-weight: 600; }
-  .price.none { color: var(--muted); font-style: italic; font-size: 18px; }
+  .price { font-family: "Fraunces", serif; font-size: 26px; font-weight: 600; cursor: pointer; border-bottom: 1.5px dashed transparent; }
+  .price:hover { border-bottom-color: var(--gold); }
+  .price.none { color: var(--muted); font-style: italic; font-size: 18px; cursor: pointer; }
+  .price.none:hover { color: var(--rust); }
+  .price-edit { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .price-prefix { font-family: "Fraunces", serif; font-size: 20px; color: var(--ink-soft); }
+  .price-input { width: 92px; font-size: 15px; padding: 6px 8px; }
+  .price-conf { font-size: 12px; padding: 6px 8px; }
   .badge {
     font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px;
     border-radius: 999px; font-weight: 700;
@@ -1054,6 +1060,53 @@ function priceBadge(l, cat) {
   return badges;
 }
 
+/* The price row swaps between a display state and an inline editor — so you can
+   tap the price (or "Add price"), type what you found at the source, and save
+   without opening the full edit form. */
+function priceRowEl(cat, l) {
+  const row = el("div", { class: "price-row" });
+  renderPriceDisplay(row, cat, l);
+  return row;
+}
+
+function renderPriceDisplay(row, cat, l) {
+  row.innerHTML = "";
+  const open = () => renderPriceEditor(row, cat, l);
+  if (l.price != null) row.appendChild(el("span", { class: "price", title: "Tap to edit", onclick: open }, fmtMoney(l.price)));
+  else row.appendChild(el("span", { class: "price none", title: "Tap to add", onclick: open }, "Price: find at source"));
+  priceBadge(l, cat).forEach(b => row.appendChild(b));
+}
+
+function renderPriceEditor(row, cat, l) {
+  row.innerHTML = "";
+  // Looked at the source and entering a real number? Default to "confirmed".
+  const defConf = (l.price == null && (l.priceConfidence || "unknown") === "unknown")
+    ? "confirmed" : (l.priceConfidence || "unknown");
+  const input = el("input", { type: "number", inputmode: "numeric", min: "0", step: "1",
+    placeholder: "e.g. 22500", value: l.price ?? "", class: "price-input" });
+  const conf = el("select", { class: "price-conf", title: "Price confidence" },
+    ...["confirmed", "estimate", "unknown"].map(o => el("option", { value: o, selected: defConf === o }, o)));
+  const save = () => {
+    const v = String(input.value).trim();
+    l.price = v === "" ? null : Number(v);
+    l.priceConfidence = l.price == null ? "unknown" : conf.value;
+    persist();
+    render();
+    toast(l.price == null ? "Price cleared" : "Price saved — " + fmtMoney(l.price));
+  };
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); save(); }
+    if (e.key === "Escape") renderPriceDisplay(row, cat, l);
+  });
+  row.appendChild(el("span", { class: "price-edit" },
+    el("span", { class: "price-prefix" }, "$"),
+    input, conf,
+    el("button", { class: "btn tiny primary", onclick: save }, "Save"),
+    el("button", { class: "btn tiny", onclick: () => renderPriceDisplay(row, cat, l) }, "Cancel")
+  ));
+  setTimeout(() => { input.focus(); input.select(); }, 0);
+}
+
 function listingCard(cat, l) {
   const over = l.price != null && cat.budget && cat.budget.preTaxTarget != null && l.price > cat.budget.preTaxTarget;
   const card = el("div", { class: "card" + (l.favorite ? " fav" : "") + (over ? " over" : "") });
@@ -1078,19 +1131,16 @@ function listingCard(cat, l) {
   if (l.distanceMiles != null) meta.appendChild(el("span", {}, l.distanceMiles + " mi away"));
   card.appendChild(meta);
 
-  // price
-  const priceRow = el("div", { class: "price-row" });
-  if (l.price != null) priceRow.appendChild(el("span", { class: "price" }, fmtMoney(l.price)));
-  else priceRow.appendChild(el("span", { class: "price none" }, "Price: find at source"));
-  priceBadge(l, cat).forEach(b => priceRow.appendChild(b));
-  card.appendChild(priceRow);
+  // price (with inline quick-edit)
+  card.appendChild(priceRowEl(cat, l));
 
   if (l.status) card.appendChild(el("div", { class: "status" }, l.status));
   if (l.notes) card.appendChild(el("div", { class: "notes" }, "✎ " + l.notes));
 
   // actions
   const actions = el("div", { class: "card-actions" });
-  if (l.sourceLink) actions.appendChild(el("a", { class: "btn tiny", href: l.sourceLink, target: "_blank", rel: "noopener" }, "Find at source ↗"));
+  if (l.sourceLink) actions.appendChild(el("a", { class: "btn tiny", href: l.sourceLink, target: "_blank", rel: "noopener noreferrer" }, "Find at source ↗"));
+  actions.appendChild(el("button", { class: "btn tiny", onclick: () => { const r = card.querySelector(".price-row"); if (r) renderPriceEditor(r, cat, l); } }, l.price != null ? "✎ Update price" : "＋ Add price"));
   actions.appendChild(el("span", { class: "spacer" }));
   actions.appendChild(el("button", { class: "btn tiny danger", onclick: () => deleteListing(cat, l) }, "Delete"));
   card.appendChild(actions);
