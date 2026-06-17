@@ -1,0 +1,218 @@
+{
+  "project": "telluride-tracker",
+  "version": "0.1.0",
+  "lastUpdated": "2026-06-16",
+  "location": "Vancouver, WA",
+  "users": ["Chad", "Joelle"],
+
+  "budget": {
+    "preTaxTarget": 22500,
+    "allInTarget": 25000,
+    "monthlyPaymentTarget": 550,
+    "notes": "Pre-tax sticker target ~$22.5k; all-in after tax/fees ~$25k. Plan to negotiate sticker down from a $23k-$24k listing."
+  },
+
+  "financing": {
+    "lender": "Local credit union",
+    "rate": 0.0499,
+    "termYearsOptions": [6, 7],
+    "promoEnds": "2026-07-04",
+    "strategy": "Get PRE-APPROVED (not fully funded) before visiting dealers. Walk in with the rate locked; make the dealer beat 4.99% or keep them out of financing entirely.",
+    "note": "Roof financing handled separately (contractor 0% if available + possible solo-401k loan). Not part of this app."
+  },
+
+  "trimPrimer": [
+    {
+      "trim": "LX",
+      "tier": "base",
+      "seats": 8,
+      "seatsConfig": "bench (standard)",
+      "seatsMaterial": "cloth",
+      "keyFeatures": ["Full safety suite", "Apple CarPlay", "tri-zone climate", "18in wheels", "8in screen"],
+      "skips": ["panoramic roof", "self-leveling rear shocks", "large screen"],
+      "budgetFit": "realistic"
+    },
+    {
+      "trim": "S",
+      "tier": "lower-mid",
+      "seats": 8,
+      "seatsConfig": "bench",
+      "seatsMaterial": "cloth",
+      "keyFeatures": ["LX features", "push-button start", "optional sunroof", "some convenience adds"],
+      "skips": ["panoramic roof", "self-leveling rear shocks"],
+      "budgetFit": "borderline"
+    },
+    {
+      "trim": "EX",
+      "tier": "mid",
+      "seats": 8,
+      "seatsConfig": "bench available",
+      "seatsMaterial": "leather",
+      "keyFeatures": ["heated front seats", "power liftgate", "10.25in screen", "wireless charging"],
+      "skips": ["panoramic roof", "self-leveling rear shocks"],
+      "budgetFit": "stretch (running $28k+ locally)"
+    },
+    {
+      "trim": "SX",
+      "tier": "top",
+      "seats": 7,
+      "seatsConfig": "captain's chairs (NOT 8 seats)",
+      "seatsMaterial": "leather",
+      "keyFeatures": ["panoramic roof", "premium audio", "self-leveling rear suspension"],
+      "skips": [],
+      "budgetFit": "over budget",
+      "warning": "Captain's chairs = 7 seats. Does NOT meet the 8-seat requirement. Also has the failure-prone panoramic roof + self-leveling shocks."
+    }
+  ],
+
+  "checklistTemplate": [
+    "Confirm 8-passenger BENCH (not 7-seat captain's chairs)",
+    "Ask: does it use oil between changes? Check dipstick yourself",
+    "Get oil-change + service records",
+    "Confirm all recalls closed (run VIN at nhtsa.gov/recalls)",
+    "Brakes done? (pads/rotors wear early, ~$400-600)",
+    "12V battery age (deaths common ~2 yrs)",
+    "Spark plugs / trans fluid serviced? (due ~90-100k)",
+    "Test infotainment screen + digital cluster (known failure point)",
+    "Show credit union 4.99% pre-approval; make them beat it"
+  ],
+
+  "knownIssues": {
+    "engineOilConsumption": "3.8L V6 burns oil as it ages; single most important question.",
+    "screenClusterFailure": "Hundreds of NHTSA complaints; large recall populations. Test thoroughly.",
+    "selfLevelingShocks": "Top-trim feature; noise -> failure; Kia TSB. Avoided by buying LX/S/EX.",
+    "valveSpring2024": "2024 model recall (~3k units). Confirm completed if looking at 2024.",
+    "windowTrimMolding": "Adhesive fails, molding peels (cosmetic)."
+  },
+
+  "listings": [
+    {
+      "id": "lx-2020-84k",
+      "title": "2020 Telluride LX AWD",
+      "year": 2020,
+      "trim": "LX",
+      "drivetrain": "AWD",
+      "mileage": 84088,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.carfax.com/Used-Kia-Telluride-Vancouver-WA_w9562_c27223",
+      "dealer": "Carfax listing",
+      "distanceMiles": null,
+      "favorite": true,
+      "status": "TOP LX target - has front bench (8 seats) + blind spot monitor",
+      "notes": "Most likely to land near $22.5k. Pull current price.",
+      "checklist": {}
+    },
+    {
+      "id": "ex-2022-96k",
+      "title": "2022 Telluride EX AWD (Premium + Towing)",
+      "year": 2022,
+      "trim": "EX",
+      "drivetrain": "AWD",
+      "mileage": 95992,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.carfax.com/Used-Kia-Telluride-Vancouver-WA_w9562_c27223",
+      "dealer": "Carfax listing",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "High miles = negotiating leverage",
+      "notes": "Leather + heated seats. High mileage should pull price down.",
+      "checklist": {}
+    },
+    {
+      "id": "ex-2021-68k",
+      "title": "2021 Telluride EX AWD (Premium + Towing)",
+      "year": 2021,
+      "trim": "EX",
+      "drivetrain": "AWD",
+      "mileage": 67557,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.carfax.com/Used-Kia-Telluride-Vancouver-WA_w9562_c27223",
+      "dealer": "Carfax listing",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Cleaner miles - will resist dropping below ~$24-25k",
+      "notes": "",
+      "checklist": {}
+    },
+    {
+      "id": "ex-2022-51k",
+      "title": "2022 Telluride EX AWD (Premium + Towing)",
+      "year": 2022,
+      "trim": "EX",
+      "drivetrain": "AWD",
+      "mileage": 51287,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.carfax.com/Used-Kia-Telluride-Vancouver-WA_w9562_c27223",
+      "dealer": "Carfax listing",
+      "distanceMiles": null,
+      "favorite": false,
+      "status": "Low miles - likely $28k+",
+      "notes": "",
+      "checklist": {}
+    },
+    {
+      "id": "ex-2022-72k",
+      "title": "2022 Telluride EX AWD",
+      "year": 2022,
+      "trim": "EX",
+      "drivetrain": "AWD",
+      "mileage": 72018,
+      "price": 28998,
+      "priceConfidence": "confirmed",
+      "sourceLink": "https://www.capitalone.com/cars/used-kia-telluride/ex-in-vancouver-wa",
+      "dealer": "Kia of Portland",
+      "distanceMiles": 7,
+      "favorite": false,
+      "status": "Above target - reference point for EX pricing",
+      "notes": "Listed ~Jun 13, 2026. Confirms EX trim sits ~$28k+ locally.",
+      "checklist": {}
+    },
+    {
+      "id": "unknown-79k-gresham",
+      "title": "Telluride (trim TBD) - Gresham Subaru",
+      "year": null,
+      "trim": null,
+      "drivetrain": null,
+      "mileage": 78582,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.jdpower.com/cars-for-sale/make-kia/model-telluride/location-vancouver-wa",
+      "dealer": "Gresham Subaru",
+      "distanceMiles": 16,
+      "favorite": false,
+      "status": "Value / high-miles candidate - confirm trim & price",
+      "notes": "",
+      "checklist": {}
+    },
+    {
+      "id": "unknown-96k-bridgecity",
+      "title": "Telluride (trim TBD) - Bridge City Auto",
+      "year": null,
+      "trim": null,
+      "drivetrain": null,
+      "mileage": 95504,
+      "price": null,
+      "priceConfidence": "unknown",
+      "sourceLink": "https://www.jdpower.com/cars-for-sale/make-kia/model-telluride/location-vancouver-wa",
+      "dealer": "Bridge City Auto Sales",
+      "distanceMiles": 17,
+      "favorite": false,
+      "status": "Value / high-miles candidate - confirm trim & price",
+      "notes": "",
+      "checklist": {}
+    }
+  ],
+
+  "searchHubs": [
+    { "name": "Carfax - Vancouver", "url": "https://www.carfax.com/Used-Kia-Telluride-Vancouver-WA_w9562_c27223" },
+    { "name": "Cars.com - Vancouver", "url": "https://www.cars.com/shopping/kia-telluride/vancouver-wa/" },
+    { "name": "Edmunds - Vancouver", "url": "https://www.edmunds.com/used-kia-telluride-vancouver-wa/" },
+    { "name": "CarGurus", "url": "https://www.cargurus.com/Cars/l-Used-Kia-Telluride" },
+    { "name": "TrueCar - Vancouver", "url": "https://www.truecar.com/used-cars-for-sale/listings/kia/telluride/location-vancouver-wa/" },
+    { "name": "Capital One Auto Navigator", "url": "https://www.capitalone.com/cars/used-kia-telluride/" }
+  ]
+}

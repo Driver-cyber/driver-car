@@ -1,0 +1,83 @@
+# Driver — Car Buying Tracker · Claude handoff
+
+A small, fast, mobile-first web app for Chad **and** Joelle to track used-car
+listings during a search in Vancouver, WA. Started as a Kia Telluride tracker;
+built to grow into other vehicle types (Minivans next) via tabbed **categories**.
+Deployed as static files on **GitHub Pages**.
+
+## Tech stack & constraints
+
+- **Vanilla HTML/CSS/JS, no build step.** Single `index.html` (inline CSS/JS).
+  Must work as static files on GitHub Pages (no server runtime).
+- **State: `localStorage`** (`driver-car-state-v1`), seeded on first load from
+  `seed-data.json`. The seed is also embedded inline in `index.html` as a
+  fallback so the app runs from `file://` where `fetch()` is blocked.
+- **JSON import/export** for backup and manual cross-phone sync.
+- No frameworks.
+
+## Architecture
+
+State shape (one level above the original seed schema):
+
+```
+state = {
+  schemaVersion, activeCategory, lastUpdated,
+  categories: {
+    telluride: { label, make, model, budget, financing, trimPrimer[],
+                 checklistTemplate[], knownIssues{}, listings[], searchHubs[] },
+    // minivan: { ... }  ← drop-in: add a category, it gets a tab + full UI
+  }
+}
+```
+
+`seed-data.json` remains the canonical schema source of truth for a single
+category (top-level keys: `budget`, `financing`, `trimPrimer`,
+`checklistTemplate`, `knownIssues`, `listings[]`, `searchHubs[]`).
+`categoryFromSeed()` wraps that raw doc into a category record.
+
+The `store` module (get/save/clear over localStorage) is the **seam for Phase 2**
+live sync (Cloudflare Worker + KV, or Firebase) — swap it without touching the UI.
+
+## Features (shipped — Phase 1)
+
+- Listings cards: title, year, trim, drivetrain, mileage, price + confidence
+  badge (confirmed / estimate / unknown), dealer + distance, status, favorite
+  star, source link ("Find at source", new tab).
+- Add / edit / delete listings (all fields editable inline).
+- Sort (price / mileage / year / best-value) + filter (trim, drivetrain,
+  favorites-only).
+- Per-car checklist from `checklistTemplate`, checked state saved per car.
+- Budget banner: pre-tax ($22.5k) + all-in ($25k) + rate; over-target flagged.
+- Collapsible trim primer (highlights the SX "7 seats / not 8" warning),
+  known-issues reference, and search-hub quick-launch buttons.
+- JSON export / import / reset-to-seed.
+
+## Design system (Chad's house style)
+
+- Headlines: **Fraunces**, italic. UI/labels/mono: **JetBrains Mono**.
+- Earthy palette: rust, gold, bone, ink. Generous negative space. Cards, not a
+  spreadsheet.
+
+## Gotchas (don't lose these)
+
+- **8 seats requires the bench.** SX captain's-chair cars are 7 seats — surfaced
+  with a red warning in the trim primer.
+- **Prices go stale fast.** Most seed listings are `price: null` / `unknown` by
+  design — they need pulling from the source link. UI says "find at source"
+  because the links are mostly search hubs, not per-VIN pages.
+- Financing (4.99% CU pre-approval before the dealer) is reference context in
+  the budget banner, not a built-out feature.
+
+## Acceptance criteria (all met)
+
+- Loads on a phone, seeded from `seed-data.json` (or inline fallback) on first run.
+- Add a listing → persists across reloads.
+- Check an item on one car → doesn't affect another car.
+- Export → re-import → identical state.
+- The 2020 LX (`lx-2020-84k`) shows favorited as the top target.
+
+## Next
+
+- **Minivans tab** (ghost tab is already wired in the UI). Add a `minivan`
+  category — Sienna / Odyssey / Carnival, with its own trims, checklist, issues.
+- Phase 2 live sync via the `store` seam.
